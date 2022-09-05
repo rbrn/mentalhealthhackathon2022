@@ -1,0 +1,81 @@
+entity Project {
+  name String
+}
+
+entity Label {
+  label String required minlength(3)
+}
+
+application {
+  config {
+    prodDatabaseType postgresql,
+  }
+  entities *
+}
+
+entity Ticket {
+  title String required
+  description String
+  dueDate LocalDate
+  date ZonedDateTime
+  status Status
+  type Type
+  priority Priority
+}
+
+entity Attachment {
+  name String required minlength(3)
+  file Blob
+}
+
+relationship ManyToMany {
+  Ticket{label(label)} to Label{ticket}
+}
+
+relationship ManyToOne {
+  Ticket{project(name)} to Project
+  Ticket{assignedTo(login)} to User
+  Ticket{reportedBy(login)} to User
+  Comment{login} to User
+}
+
+relationship OneToMany {
+  Comment{parent} to Comment{child}
+  Ticket to Attachment 
+}
+
+enum Status {
+  OPEN("Open")
+  WAITING_FOR_RESPONSE("Waiting for Customer Response")
+  CLOSED("Closed")
+  DUPLICATE("Duplicate")
+  IN_PROGRESS("In Progress")
+  REOPENED("Reopened")
+  CANNOT_REPRODUCE("Cannot Reproduce")
+  SOLVED("Solved")
+  WONT_IMPLEMENT("Won't Implement")
+  VERIFIED("Verified")
+  
+}
+
+enum Type {
+  BUG("Bug"),
+  FEATURE("Feature")
+}
+
+enum Priority {
+  HIGHEST("Highest")
+  HIGHER("Higher")
+  HIGH("High")
+  NORMAL("Normal")
+  LOW("Low")
+  LOWER("Lower")
+  LOWERST("Lowest")
+}
+
+entity Comment {
+  date ZonedDateTime
+  text String
+}
+
+paginate Ticket with pagination
