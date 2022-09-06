@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ticket</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
+        <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+        <ion-icon name="checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item [hidden]="!form.id">
+        <ion-label>ID</ion-label>
+        <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Title</ion-label>
+        <ion-input type="text" name="title" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-input type="text" name="description" formControlName="description"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Due Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" formControlName="dueDate" id="field_dueDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="date" id="field_date"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Status</ion-label>
+        <ion-select formControlName="status" id="field_status">
+          <ion-select-option value="OPEN">{{'Status.OPEN' | translate}}</ion-select-option>
+          <ion-select-option value="WAITING_FOR_RESPONSE">{{'Status.WAITING_FOR_RESPONSE' | translate}}</ion-select-option>
+          <ion-select-option value="CLOSED">{{'Status.CLOSED' | translate}}</ion-select-option>
+          <ion-select-option value="DUPLICATE">{{'Status.DUPLICATE' | translate}}</ion-select-option>
+          <ion-select-option value="IN_PROGRESS">{{'Status.IN_PROGRESS' | translate}}</ion-select-option>
+          <ion-select-option value="REOPENED">{{'Status.REOPENED' | translate}}</ion-select-option>
+          <ion-select-option value="CANNOT_REPRODUCE">{{'Status.CANNOT_REPRODUCE' | translate}}</ion-select-option>
+          <ion-select-option value="SOLVED">{{'Status.SOLVED' | translate}}</ion-select-option>
+          <ion-select-option value="WONT_IMPLEMENT">{{'Status.WONT_IMPLEMENT' | translate}}</ion-select-option>
+          <ion-select-option value="VERIFIED">{{'Status.VERIFIED' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Type</ion-label>
+        <ion-select formControlName="type" id="field_type">
+          <ion-select-option value="BUG">{{'Type.BUG' | translate}}</ion-select-option>
+          <ion-select-option value="FEATURE">{{'Type.FEATURE' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Priority</ion-label>
+        <ion-select formControlName="priority" id="field_priority">
+          <ion-select-option value="HIGHEST">{{'Priority.HIGHEST' | translate}}</ion-select-option>
+          <ion-select-option value="HIGHER">{{'Priority.HIGHER' | translate}}</ion-select-option>
+          <ion-select-option value="HIGH">{{'Priority.HIGH' | translate}}</ion-select-option>
+          <ion-select-option value="NORMAL">{{'Priority.NORMAL' | translate}}</ion-select-option>
+          <ion-select-option value="LOW">{{'Priority.LOW' | translate}}</ion-select-option>
+          <ion-select-option value="LOWER">{{'Priority.LOWER' | translate}}</ion-select-option>
+          <ion-select-option value="LOWERST">{{'Priority.LOWERST' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Project</ion-label>
+        <ion-select id="field_project" formControlName="project" [compareWith]="compareProject">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option [value]="projectOption" *ngFor="let projectOption of projects; trackBy: trackProjectById"
+            >{{projectOption.name}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Assigned To</ion-label>
+        <ion-select id="field_assignedTo" formControlName="assignedTo" [compareWith]="compareUser">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option [value]="userOption" *ngFor="let userOption of users; trackBy: trackUserById"
+            >{{userOption.login}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Reported By</ion-label>
+        <ion-select id="field_reportedBy" formControlName="reportedBy" [compareWith]="compareUser">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option [value]="userOption" *ngFor="let userOption of users; trackBy: trackUserById"
+            >{{userOption.login}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Label</ion-label>
+        <ion-select id="field_label" multiple="true" formControlName="labels" [compareWith]="compareLabel">
+          <ion-select-option [value]="labelOption" *ngFor="let labelOption of labels; trackBy: trackLabelById"
+            >{{labelOption.label}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

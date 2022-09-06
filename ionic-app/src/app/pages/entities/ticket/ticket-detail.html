@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ticket</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">ID</ion-label>
+      <div item-content>
+        <span id="id-content">{{ticket.id}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Title</ion-label>
+      <div item-content>
+        <span id="title-content">{{ticket.title}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Description</ion-label>
+      <div item-content>
+        <span id="description-content">{{ticket.description}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Due Date</ion-label>
+      <div item-content>
+        <span id="dueDate-content">{{ticket.dueDate | date:'mediumDate'}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Date</ion-label>
+      <div item-content>
+        <span id="date-content">{{ticket.date | date:'medium'}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Status</ion-label>
+      <div item-content>
+        <span id="status-content">{{ticket.status}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Type</ion-label>
+      <div item-content>
+        <span id="type-content">{{ticket.type}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Priority</ion-label>
+      <div item-content>
+        <span id="priority-content">{{ticket.priority}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Project</ion-label>
+      <div item-content *ngIf="ticket.project">
+        <a>{{ticket.project?.name}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Assigned To</ion-label>
+      <div item-content>{{ticket.assignedTo?.login}}</div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Reported By</ion-label>
+      <div item-content>{{ticket.reportedBy?.login}}</div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Label</ion-label>
+      <div item-content>
+        <span *ngFor="let label of ticket.labels; let last = last"> <a>{{label.label}}</a>{{last ? '' : ', '}} </span>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(ticket)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(ticket)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>

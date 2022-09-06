@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Comment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">ID</ion-label>
+      <div item-content>
+        <span id="id-content">{{comment.id}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Date</ion-label>
+      <div item-content>
+        <span id="date-content">{{comment.date | date:'medium'}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Text</ion-label>
+      <div item-content>
+        <span id="text-content">{{comment.text}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Login</ion-label>
+      <div item-content>{{comment.login?.id}}</div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Child</ion-label>
+      <div item-content *ngIf="comment.child">
+        <a>{{comment.child?.id}}</a>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(comment)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(comment)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>
