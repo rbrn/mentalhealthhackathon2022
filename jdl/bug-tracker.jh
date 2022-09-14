@@ -23,6 +23,7 @@ entity Ticket {
   priority Priority
 }
 
+
 entity Attachment {
   name String required minlength(3)
   file Blob
@@ -41,7 +42,7 @@ relationship ManyToOne {
 
 relationship OneToMany {
   Comment{parent} to Comment{child}
-  Ticket to Attachment 
+  Ticket to Attachment
 }
 
 enum Status {
@@ -55,7 +56,7 @@ enum Status {
   SOLVED("Solved")
   WONT_IMPLEMENT("Won't Implement")
   VERIFIED("Verified")
-  
+
 }
 
 enum Type {
