@@ -1,0 +1,133 @@
+import { EntityComponentsPage, EntityDetailPage, EntityUpdatePage } from '../../entity.po';
+
+export class ScenarioComponentsPage extends EntityComponentsPage {
+  pageSelector = 'page-scenario';
+}
+
+export class ScenarioUpdatePage extends EntityUpdatePage {
+  pageSelector = 'page-scenario-update';
+
+  setOrderInput(order: string) {
+    this.setInputValue('order', order);
+  }
+
+  setNameInput(name: string) {
+    this.setInputValue('name', name);
+  }
+
+  setIdentifierInput(identifier: string) {
+    this.setInputValue('identifier', identifier);
+  }
+
+  setTextInput(text: string) {
+    this.setInputValue('text', text);
+  }
+
+  setAudioFileNameInput(audioFileName: string) {
+    this.setInputValue('audioFileName', audioFileName);
+  }
+
+  setRntypeInput(rntype: string) {
+    this.setInputValue('rntype', rntype);
+  }
+
+  setThemeInput(theme: string) {
+    this.setInputValue('theme', theme);
+  }
+
+  setCathegoryInput(cathegory: string) {
+    this.select('cathegory', cathegory);
+  }
+
+  setSubcatInput(subcat: string) {
+    this.select('subcat', subcat);
+  }
+
+  setScenarioNumberInput(scenarioNumber: string) {
+    this.setInputValue('scenarioNumber', scenarioNumber);
+  }
+
+  setTrialTypeInput(trialType: string) {
+    this.setInputValue('trialType', trialType);
+  }
+
+  setRepeatableInput(repeatable: string) {
+    this.setBoolean('repeatable', repeatable);
+  }
+
+  setPositivityInput(positivity: string) {
+    this.setBoolean('positivity', positivity);
+  }
+
+  setVividnessInput(vividness: string) {
+    this.setBoolean('vividness', vividness);
+  }
+
+  setCreatedDateInput(createdDate: string) {
+    this.setDateTime('createdDate', createdDate);
+  }
+}
+
+export class ScenarioDetailPage extends EntityDetailPage {
+  pageSelector = 'page-scenario-detail';
+
+  getOrderContent() {
+    return cy.get('#order-content');
+  }
+
+  getNameContent() {
+    return cy.get('#name-content');
+  }
+
+  getIdentifierContent() {
+    return cy.get('#identifier-content');
+  }
+
+  getTextContent() {
+    return cy.get('#text-content');
+  }
+
+  getAudioFileNameContent() {
+    return cy.get('#audioFileName-content');
+  }
+
+  getRntypeContent() {
+    return cy.get('#rntype-content');
+  }
+
+  getThemeContent() {
+    return cy.get('#theme-content');
+  }
+
+  getCathegoryContent() {
+    return cy.get('#cathegory-content');
+  }
+
+  getSubcatContent() {
+    return cy.get('#subcat-content');
+  }
+
+  getScenarioNumberContent() {
+    return cy.get('#scenarioNumber-content');
+  }
+
+  getTrialTypeContent() {
+    return cy.get('#trialType-content');
+  }
+
+  getRepeatableContent() {
+    return cy.get('#repeatable-content');
+  }
+
+  getPositivityContent() {
+    return cy.get('#positivity-content');
+  }
+
+  getVividnessContent() {
+    return cy.get('#vividness-content');
+  }
+
+  getCreatedDateContent() {
+    return cy.get('#createdDate-content');
+  }
+}

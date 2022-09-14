@@ -1,0 +1,212 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-scenario-heading" data-cy="ScenarioCreateUpdateHeading" jhiTranslate="jhipsterApp.scenario.home.createOrEditLabel">
+        Create or edit a Scenario
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.order" for="field_order">Order</label>
+          <input type="text" class="form-control" name="order" id="field_order" data-cy="order" formControlName="order" />
+          <div *ngIf="editForm.get('order')!.invalid && (editForm.get('order')!.dirty || editForm.get('order')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('order')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.identifier" for="field_identifier">Identifier</label>
+          <input
+            type="text"
+            class="form-control"
+            name="identifier"
+            id="field_identifier"
+            data-cy="identifier"
+            formControlName="identifier"
+          />
+          <div *ngIf="editForm.get('identifier')!.invalid && (editForm.get('identifier')!.dirty || editForm.get('identifier')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('identifier')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.text" for="field_text">Text</label>
+          <input type="text" class="form-control" name="text" id="field_text" data-cy="text" formControlName="text" />
+          <div *ngIf="editForm.get('text')!.invalid && (editForm.get('text')!.dirty || editForm.get('text')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('text')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.audioFileName" for="field_audioFileName">Audio File Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="audioFileName"
+            id="field_audioFileName"
+            data-cy="audioFileName"
+            formControlName="audioFileName"
+          />
+          <div
+            *ngIf="
+              editForm.get('audioFileName')!.invalid && (editForm.get('audioFileName')!.dirty || editForm.get('audioFileName')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('audioFileName')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.rntype" for="field_rntype">Rntype</label>
+          <input type="text" class="form-control" name="rntype" id="field_rntype" data-cy="rntype" formControlName="rntype" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.theme" for="field_theme">Theme</label>
+          <input type="text" class="form-control" name="theme" id="field_theme" data-cy="theme" formControlName="theme" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.cathegory" for="field_cathegory">Cathegory</label>
+          <select class="form-control" name="cathegory" formControlName="cathegory" id="field_cathegory" data-cy="cathegory">
+            <option [ngValue]="null">{{ 'jhipsterApp.Category.null' | translate }}</option>
+            <option *ngFor="let category of categoryValues" [value]="category">{{ 'jhipsterApp.Category.' + category | translate }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.subcat" for="field_subcat">Subcat</label>
+          <select class="form-control" name="subcat" formControlName="subcat" id="field_subcat" data-cy="subcat">
+            <option [ngValue]="null">{{ 'jhipsterApp.Subcategory.null' | translate }}</option>
+            <option *ngFor="let subcategory of subcategoryValues" [value]="subcategory">
+              {{ 'jhipsterApp.Subcategory.' + subcategory | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.scenarioNumber" for="field_scenarioNumber">Scenario Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="scenarioNumber"
+            id="field_scenarioNumber"
+            data-cy="scenarioNumber"
+            formControlName="scenarioNumber"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.trialType" for="field_trialType">Trial Type</label>
+          <input type="text" class="form-control" name="trialType" id="field_trialType" data-cy="trialType" formControlName="trialType" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.repeatable" for="field_repeatable">Repeatable</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="repeatable"
+            id="field_repeatable"
+            data-cy="repeatable"
+            formControlName="repeatable"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.positivity" for="field_positivity">Positivity</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="positivity"
+            id="field_positivity"
+            data-cy="positivity"
+            formControlName="positivity"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.vividness" for="field_vividness">Vividness</label>
+          <input type="checkbox" class="form-check" name="vividness" id="field_vividness" data-cy="vividness" formControlName="vividness" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.createdDate" for="field_createdDate">Created Date</label>
+          <div class="d-flex">
+            <input
+              id="field_createdDate"
+              data-cy="createdDate"
+              type="datetime-local"
+              class="form-control"
+              name="createdDate"
+              formControlName="createdDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApp.scenario.session" for="field_session">Session</label>
+          <select class="form-control" id="field_session" data-cy="session" name="session" formControlName="session">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="sessionOption.id === editForm.get('session')!.value?.id ? editForm.get('session')!.value : sessionOption"
+              *ngFor="let sessionOption of sessionsSharedCollection; trackBy: trackSessionById"
+            >
+              {{ sessionOption.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

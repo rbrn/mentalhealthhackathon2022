@@ -1,0 +1,9 @@
+{
+  "jhipsterApp": {
+    "Category": {
+      "null": "",
+      "CAT1": "Bug",
+      "CAT2": "Feature"
+    }
+  }
+}

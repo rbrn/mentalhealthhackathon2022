@@ -1,0 +1,39 @@
+{
+  "jhipsterApp": {
+    "scenario": {
+      "home": {
+        "title": "Scenarios",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Scenario",
+        "createOrEditLabel": "Create or edit a Scenario",
+        "notFound": "No Scenarios found"
+      },
+      "created": "A new Scenario is created with identifier {{ param }}",
+      "updated": "A Scenario is updated with identifier {{ param }}",
+      "deleted": "A Scenario is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Scenario {{ id }}?"
+      },
+      "detail": {
+        "title": "Scenario"
+      },
+      "id": "ID",
+      "order": "Order",
+      "name": "Name",
+      "identifier": "Identifier",
+      "text": "Text",
+      "audioFileName": "Audio File Name",
+      "rntype": "Rntype",
+      "theme": "Theme",
+      "cathegory": "Cathegory",
+      "subcat": "Subcat",
+      "scenarioNumber": "Scenario Number",
+      "trialType": "Trial Type",
+      "repeatable": "Repeatable",
+      "positivity": "Positivity",
+      "vividness": "Vividness",
+      "createdDate": "Created Date",
+      "session": "Session"
+    }
+  }
+}

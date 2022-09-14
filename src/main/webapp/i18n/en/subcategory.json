@@ -1,0 +1,9 @@
+{
+  "jhipsterApp": {
+    "Subcategory": {
+      "null": "",
+      "SUBC1": "Bug",
+      "SUBC2": "Feature"
+    }
+  }
+}

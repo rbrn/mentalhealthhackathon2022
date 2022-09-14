@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="session">
+      <h2 data-cy="sessionDetailsHeading"><span jhiTranslate="jhipsterApp.session.detail.title">Session</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ session.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="jhipsterApp.session.order">Order</span></dt>
+        <dd>
+          <span>{{ session.order }}</span>
+        </dd>
+        <dt><span jhiTranslate="jhipsterApp.session.percentageResolved">Percentage Resolved</span></dt>
+        <dd>
+          <span>{{ session.percentageResolved }}</span>
+        </dd>
+        <dt><span jhiTranslate="jhipsterApp.session.name">Name</span></dt>
+        <dd>
+          <span>{{ session.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="jhipsterApp.session.createdDate">Created Date</span></dt>
+        <dd>
+          <span>{{ session.createdDate | formatMediumDatetime }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/session', session.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

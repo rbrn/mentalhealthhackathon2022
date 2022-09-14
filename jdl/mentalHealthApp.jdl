@@ -1,0 +1,71 @@
+application {
+  config {
+    prodDatabaseType postgresql,
+  }
+  entities *
+}
+
+entity Session {
+  order Integer required
+  percentageResolved Integer required
+  name String required
+  createdDate ZonedDateTime
+}
+
+entity Scenario {
+  order String required
+  name String required
+  identifier String required
+  text String required
+  audioFileName String required
+  rntype String
+  theme String
+  cathegory Category
+  subcat Subcategory
+  scenarioNumber String
+  trialType String
+  repeatable Boolean
+  positivity Boolean
+  vividness Boolean
+  createdDate ZonedDateTime
+}
+
+entity Question{
+   text String required
+   correctAnswer Boolean required
+   correctAnswerFeedback Boolean required
+   wrongAnswerFeedback Boolean required
+   createdDate ZonedDateTime
+}
+
+entity QuestionUserInput{
+    userId String
+    response String
+}
+
+relationship ManyToOne {
+  Scenario{session(name)} to Session
+  Question{scenario(name)} to Scenario
+  QuestionUserInput{scenario(name)} to Scenario
+}
+
+// Set pagination options
+paginate Session with infinite-scroll
+paginate Scenario, Question, QuestionUserInput with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service * with serviceImpl
+
+enum Category {
+  CAT1("Bug"),
+  CAT2("Feature")
+}
+
+enum Subcategory {
+  SUBC1("Bug"),
+  SUBC2("Feature")
+}
+
