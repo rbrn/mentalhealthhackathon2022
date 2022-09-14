@@ -19,11 +19,14 @@ openjdk version "11.0.16" 2022-07-19
 
 ### Make sure node, npm and jhipster are in the path
 
-`jhipster jdl bug-tracker.jh --blueprints ionic --skip-checks`
+`jhipster jdl jdl/mentalHealthApp.jdl --blueprints ionic --skip-checks`
 
 Review the screen and provide the folder for the ionic app
 #### cd ionic-app
-#### Start the backend 
+#### Install the backend
+`npm intall`
+
+### Run the backend 
 `npm run backend:start`
 
 #### Start the ionic local emulator and login with admin:admin
