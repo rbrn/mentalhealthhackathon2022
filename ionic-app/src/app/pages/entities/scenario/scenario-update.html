@@ -120,7 +120,7 @@
         <ion-select id="field_session" formControlName="session" [compareWith]="compareSession">
           <ion-select-option [value]="null"></ion-select-option>
           <ion-select-option [value]="sessionOption" *ngFor="let sessionOption of sessions; trackBy: trackSessionById"
-            >{{sessionOption.name}}</ion-select-option
+            >{{sessionOption.id}}</ion-select-option
           >
         </ion-select>
       </ion-item>

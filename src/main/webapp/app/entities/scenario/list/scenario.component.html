@@ -81,7 +81,7 @@
           <th scope="col" jhiSortBy="question.title">
             <span jhiTranslate="metalHealthApp.scenario.question">Question</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="session.name">
+          <th scope="col" jhiSortBy="session.id">
             <span jhiTranslate="metalHealthApp.scenario.session">Session</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
@@ -122,7 +122,7 @@
           </td>
           <td>
             <div *ngIf="scenario.session">
-              <a [routerLink]="['/session', scenario.session?.id, 'view']">{{ scenario.session?.name }}</a>
+              <a [routerLink]="['/session', scenario.session?.id, 'view']">{{ scenario.session?.id }}</a>
             </div>
           </td>
           <td class="text-end">

@@ -220,7 +220,7 @@
               [ngValue]="sessionOption.id === editForm.get('session')!.value?.id ? editForm.get('session')!.value : sessionOption"
               *ngFor="let sessionOption of sessionsSharedCollection; trackBy: trackSessionById"
             >
-              {{ sessionOption.name }}
+              {{ sessionOption.id }}
             </option>
           </select>
         </div>

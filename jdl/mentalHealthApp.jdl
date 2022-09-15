@@ -62,10 +62,6 @@ entity SubCategory{
 name String
 }
 
-relationship ManyToOne {
-  Scenario{session(name)} to Session
-}
-
 relationship OneToOne{
  Scenario{category(name)} to Category
  Scenario{subcategory(name)} to SubCategory
@@ -74,6 +70,7 @@ relationship OneToOne{
 
 relationship OneToMany{
  Scenario{sessionStatuses} to ScenarioStatusEvent
+ Session{scenarios(name)} to Scenario
 }
 
 // Set pagination options

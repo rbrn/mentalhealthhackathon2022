@@ -87,7 +87,7 @@
         <dt><span jhiTranslate="metalHealthApp.scenario.session">Session</span></dt>
         <dd>
           <div *ngIf="scenario.session">
-            <a [routerLink]="['/session', scenario.session?.id, 'view']">{{ scenario.session?.name }}</a>
+            <a [routerLink]="['/session', scenario.session?.id, 'view']">{{ scenario.session?.id }}</a>
           </div>
         </dd>
       </dl>

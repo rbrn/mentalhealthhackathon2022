@@ -103,9 +103,8 @@
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityField": "name",
       "otherEntityName": "session",
-      "otherEntityRelationshipName": "scenario",
+      "otherEntityRelationshipName": "scenarios",
       "relationshipName": "session",
       "relationshipType": "many-to-one"
     }

@@ -1,7 +1,10 @@
 package db.com.mentalhealth.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -41,6 +44,11 @@ public class Session implements Serializable {
 
     @Column(name = "created_date")
     private ZonedDateTime createdDate;
+
+    @OneToMany(mappedBy = "session", fetch = FetchType.EAGER)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "category", "subcategory", "question", "sessionStatuses", "session" }, allowSetters = true)
+    private Set<Scenario> scenarios = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -120,6 +128,37 @@ public class Session implements Serializable {
 
     public void setCreatedDate(ZonedDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public Set<Scenario> getScenarios() {
+        return this.scenarios;
+    }
+
+    public void setScenarios(Set<Scenario> scenarios) {
+        if (this.scenarios != null) {
+            this.scenarios.forEach(i -> i.setSession(null));
+        }
+        if (scenarios != null) {
+            scenarios.forEach(i -> i.setSession(this));
+        }
+        this.scenarios = scenarios;
+    }
+
+    public Session scenarios(Set<Scenario> scenarios) {
+        this.setScenarios(scenarios);
+        return this;
+    }
+
+    public Session addScenarios(Scenario scenario) {
+        this.scenarios.add(scenario);
+        scenario.setSession(this);
+        return this;
+    }
+
+    public Session removeScenarios(Scenario scenario) {
+        this.scenarios.remove(scenario);
+        scenario.setSession(null);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

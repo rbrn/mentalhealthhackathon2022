@@ -22,7 +22,8 @@
       "percentageResolved": "Percentage Resolved",
       "name": "Name",
       "sessionNumber": "Session Number",
-      "createdDate": "Created Date"
+      "createdDate": "Created Date",
+      "scenarios": "Scenarios"
     }
   }
 }

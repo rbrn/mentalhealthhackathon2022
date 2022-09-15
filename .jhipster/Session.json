@@ -35,6 +35,14 @@
   "name": "Session",
   "pagination": "infinite-scroll",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "scenario",
+      "otherEntityRelationshipName": "session",
+      "relationshipName": "scenarios",
+      "relationshipType": "one-to-many"
+    }
+  ],
   "service": "serviceImpl"
 }

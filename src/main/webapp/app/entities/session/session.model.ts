@@ -1,4 +1,5 @@
 import dayjs from 'dayjs/esm';
+import { IScenario } from 'app/entities/scenario/scenario.model';
 
 export interface ISession {
   id?: number;
@@ -7,6 +8,7 @@ export interface ISession {
   name?: string;
   sessionNumber?: number;
   createdDate?: dayjs.Dayjs | null;
+  scenarios?: IScenario[] | null;
 }
 
 export class Session implements ISession {
@@ -16,7 +18,8 @@ export class Session implements ISession {
     public percentageResolved?: number,
     public name?: string,
     public sessionNumber?: number,
-    public createdDate?: dayjs.Dayjs | null
+    public createdDate?: dayjs.Dayjs | null,
+    public scenarios?: IScenario[] | null
   ) {}
 }
 

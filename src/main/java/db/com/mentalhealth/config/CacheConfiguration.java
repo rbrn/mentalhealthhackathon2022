@@ -49,6 +49,7 @@ public class CacheConfiguration {
             createCache(cm, db.com.mentalhealth.domain.Authority.class.getName());
             createCache(cm, db.com.mentalhealth.domain.User.class.getName() + ".authorities");
             createCache(cm, db.com.mentalhealth.domain.Session.class.getName());
+            createCache(cm, db.com.mentalhealth.domain.Session.class.getName() + ".scenarios");
             createCache(cm, db.com.mentalhealth.domain.Scenario.class.getName());
             createCache(cm, db.com.mentalhealth.domain.Scenario.class.getName() + ".sessionStatuses");
             createCache(cm, db.com.mentalhealth.domain.Question.class.getName());
