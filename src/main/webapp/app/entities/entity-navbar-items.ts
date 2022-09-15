@@ -29,4 +29,9 @@ export const EntityNavbarItems = [
     route: 'sub-category',
     translationKey: 'global.menu.entities.subCategory',
   },
+  {
+    name: 'ScenarioStatusEvent',
+    route: 'scenario-status-event',
+    translationKey: 'global.menu.entities.scenarioStatusEvent',
+  },
 ];

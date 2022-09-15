@@ -200,6 +200,19 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="metalHealthApp.scenario.question" for="field_question">Question</label>
+          <select class="form-control" id="field_question" data-cy="question" name="question" formControlName="question">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="questionOption.id === editForm.get('question')!.value?.id ? editForm.get('question')!.value : questionOption"
+              *ngFor="let questionOption of questionsCollection; trackBy: trackQuestionById"
+            >
+              {{ questionOption.title }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="metalHealthApp.scenario.session" for="field_session">Session</label>
           <select class="form-control" id="field_session" data-cy="session" name="session" formControlName="session">
             <option [ngValue]="null"></option>

@@ -21,10 +21,11 @@
     <include file="config/liquibase/changelog/20220915065718_added_entity_QuestionUserInput.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220915065818_added_entity_Category.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220915065918_added_entity_SubCategory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220915134008_added_entity_ScenarioStatusEvent.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20220915065518_added_entity_constraints_Scenario.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20220915065618_added_entity_constraints_Question.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220915065718_added_entity_constraints_QuestionUserInput.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220915134008_added_entity_constraints_ScenarioStatusEvent.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

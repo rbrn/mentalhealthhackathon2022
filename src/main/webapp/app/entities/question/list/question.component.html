@@ -33,6 +33,9 @@
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
           <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="title">
+            <span jhiTranslate="metalHealthApp.question.title">Title</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col" jhiSortBy="text">
             <span jhiTranslate="metalHealthApp.question.text">Text</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -49,9 +52,6 @@
           <th scope="col" jhiSortBy="createdDate">
             <span jhiTranslate="metalHealthApp.question.createdDate">Created Date</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="scenario.name">
-            <span jhiTranslate="metalHealthApp.question.scenario">Scenario</span> <fa-icon icon="sort"></fa-icon>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -60,16 +60,12 @@
           <td>
             <a [routerLink]="['/question', question.id, 'view']">{{ question.id }}</a>
           </td>
+          <td>{{ question.title }}</td>
           <td>{{ question.text }}</td>
           <td>{{ question.correctAnswer }}</td>
           <td>{{ question.correctAnswerFeedback }}</td>
           <td>{{ question.wrongAnswerFeedback }}</td>
           <td>{{ question.createdDate | formatMediumDatetime }}</td>
-          <td>
-            <div *ngIf="question.scenario">
-              <a [routerLink]="['/scenario', question.scenario?.id, 'view']">{{ question.scenario?.name }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

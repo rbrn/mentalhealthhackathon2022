@@ -59,6 +59,9 @@
             <column name="subcategory_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_scenario__subcategory_id" />
             </column>
+            <column name="question_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_scenario__question_id" />
+            </column>
             <column name="session_id" type="bigint">
                 <constraints nullable="true" />
             </column>

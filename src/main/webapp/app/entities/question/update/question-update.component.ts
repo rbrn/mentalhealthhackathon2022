@@ -3,15 +3,13 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import dayjs from 'dayjs/esm';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
 import { IQuestion, Question } from '../question.model';
 import { QuestionService } from '../service/question.service';
-import { IScenario } from 'app/entities/scenario/scenario.model';
-import { ScenarioService } from 'app/entities/scenario/service/scenario.service';
 
 @Component({
   selector: 'jhi-question-update',
@@ -20,24 +18,17 @@ import { ScenarioService } from 'app/entities/scenario/service/scenario.service'
 export class QuestionUpdateComponent implements OnInit {
   isSaving = false;
 
-  scenariosSharedCollection: IScenario[] = [];
-
   editForm = this.fb.group({
     id: [],
+    title: [null, [Validators.required]],
     text: [null, [Validators.required]],
     correctAnswer: [null, [Validators.required]],
     correctAnswerFeedback: [null, [Validators.required]],
     wrongAnswerFeedback: [null, [Validators.required]],
     createdDate: [],
-    scenario: [],
   });
 
-  constructor(
-    protected questionService: QuestionService,
-    protected scenarioService: ScenarioService,
-    protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
-  ) {}
+  constructor(protected questionService: QuestionService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ question }) => {
@@ -47,8 +38,6 @@ export class QuestionUpdateComponent implements OnInit {
       }
 
       this.updateForm(question);
-
-      this.loadRelationshipsOptions();
     });
   }
 
@@ -64,10 +53,6 @@ export class QuestionUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.questionService.create(question));
     }
-  }
-
-  trackScenarioById(_index: number, item: IScenario): number {
-    return item.id!;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IQuestion>>): void {
@@ -92,36 +77,20 @@ export class QuestionUpdateComponent implements OnInit {
   protected updateForm(question: IQuestion): void {
     this.editForm.patchValue({
       id: question.id,
+      title: question.title,
       text: question.text,
       correctAnswer: question.correctAnswer,
       correctAnswerFeedback: question.correctAnswerFeedback,
       wrongAnswerFeedback: question.wrongAnswerFeedback,
       createdDate: question.createdDate ? question.createdDate.format(DATE_TIME_FORMAT) : null,
-      scenario: question.scenario,
     });
-
-    this.scenariosSharedCollection = this.scenarioService.addScenarioToCollectionIfMissing(
-      this.scenariosSharedCollection,
-      question.scenario
-    );
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.scenarioService
-      .query()
-      .pipe(map((res: HttpResponse<IScenario[]>) => res.body ?? []))
-      .pipe(
-        map((scenarios: IScenario[]) =>
-          this.scenarioService.addScenarioToCollectionIfMissing(scenarios, this.editForm.get('scenario')!.value)
-        )
-      )
-      .subscribe((scenarios: IScenario[]) => (this.scenariosSharedCollection = scenarios));
   }
 
   protected createFromForm(): IQuestion {
     return {
       ...new Question(),
       id: this.editForm.get(['id'])!.value,
+      title: this.editForm.get(['title'])!.value,
       text: this.editForm.get(['text'])!.value,
       correctAnswer: this.editForm.get(['correctAnswer'])!.value,
       correctAnswerFeedback: this.editForm.get(['correctAnswerFeedback'])!.value,
@@ -129,7 +98,6 @@ export class QuestionUpdateComponent implements OnInit {
       createdDate: this.editForm.get(['createdDate'])!.value
         ? dayjs(this.editForm.get(['createdDate'])!.value, DATE_TIME_FORMAT)
         : undefined,
-      scenario: this.editForm.get(['scenario'])!.value,
     };
   }
 }

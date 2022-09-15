@@ -50,10 +50,12 @@ public class CacheConfiguration {
             createCache(cm, db.com.mentalhealth.domain.User.class.getName() + ".authorities");
             createCache(cm, db.com.mentalhealth.domain.Session.class.getName());
             createCache(cm, db.com.mentalhealth.domain.Scenario.class.getName());
+            createCache(cm, db.com.mentalhealth.domain.Scenario.class.getName() + ".sessionStatuses");
             createCache(cm, db.com.mentalhealth.domain.Question.class.getName());
             createCache(cm, db.com.mentalhealth.domain.QuestionUserInput.class.getName());
             createCache(cm, db.com.mentalhealth.domain.Category.class.getName());
             createCache(cm, db.com.mentalhealth.domain.SubCategory.class.getName());
+            createCache(cm, db.com.mentalhealth.domain.ScenarioStatusEvent.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

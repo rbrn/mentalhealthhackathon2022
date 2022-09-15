@@ -34,6 +34,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'metalHealthApp.subCategory.home.title' },
         loadChildren: () => import('./sub-category/sub-category.module').then(m => m.SubCategoryModule),
       },
+      {
+        path: 'scenario-status-event',
+        data: { pageTitle: 'metalHealthApp.scenarioStatusEvent.home.title' },
+        loadChildren: () => import('./scenario-status-event/scenario-status-event.module').then(m => m.ScenarioStatusEventModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

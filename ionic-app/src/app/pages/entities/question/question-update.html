@@ -22,6 +22,10 @@
         <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
       </ion-item>
       <ion-item>
+        <ion-label position="floating">Title</ion-label>
+        <ion-input type="text" name="title" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item>
         <ion-label position="floating">Text</ion-label>
         <ion-input type="text" name="text" formControlName="text"></ion-input>
       </ion-item>
@@ -40,15 +44,6 @@
       <ion-item>
         <ion-label>Created Date</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="createdDate" id="field_createdDate"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label>Scenario</ion-label>
-        <ion-select id="field_scenario" formControlName="scenario" [compareWith]="compareScenario">
-          <ion-select-option [value]="null"></ion-select-option>
-          <ion-select-option [value]="scenarioOption" *ngFor="let scenarioOption of scenarios; trackBy: trackScenarioById"
-            >{{scenarioOption.name}}</ion-select-option
-          >
-        </ion-select>
       </ion-item>
     </ion-list>
   </form>

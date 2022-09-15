@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Question } from './question.model';
 import { QuestionService } from './question.service';
-import { Scenario, ScenarioService } from '../scenario';
 
 @Component({
   selector: 'page-question-update',
@@ -14,7 +13,6 @@ import { Scenario, ScenarioService } from '../scenario';
 })
 export class QuestionUpdatePage implements OnInit {
   question: Question;
-  scenarios: Scenario[];
   createdDate: string;
   isSaving = false;
   isNew = true;
@@ -22,12 +20,12 @@ export class QuestionUpdatePage implements OnInit {
 
   form = this.formBuilder.group({
     id: [null, []],
+    title: [null, [Validators.required]],
     text: [null, [Validators.required]],
     correctAnswer: ['false', [Validators.required]],
     correctAnswerFeedback: ['false', [Validators.required]],
     wrongAnswerFeedback: ['false', [Validators.required]],
     createdDate: [null, []],
-    scenario: [null, []],
   });
 
   constructor(
@@ -36,7 +34,6 @@ export class QuestionUpdatePage implements OnInit {
     protected formBuilder: FormBuilder,
     public platform: Platform,
     protected toastCtrl: ToastController,
-    private scenarioService: ScenarioService,
     private questionService: QuestionService
   ) {
     // Watch the form for changes, and
@@ -46,12 +43,6 @@ export class QuestionUpdatePage implements OnInit {
   }
 
   ngOnInit() {
-    this.scenarioService.query().subscribe(
-      data => {
-        this.scenarios = data.body;
-      },
-      error => this.onError(error)
-    );
     this.activatedRoute.data.subscribe(response => {
       this.question = response.data;
       this.isNew = this.question.id === null || this.question.id === undefined;
@@ -62,12 +53,12 @@ export class QuestionUpdatePage implements OnInit {
   updateForm(question: Question) {
     this.form.patchValue({
       id: question.id,
+      title: question.title,
       text: question.text,
       correctAnswer: question.correctAnswer,
       correctAnswerFeedback: question.correctAnswerFeedback,
       wrongAnswerFeedback: question.wrongAnswerFeedback,
       createdDate: this.isNew ? new Date().toISOString() : question.createdDate,
-      scenario: question.scenario,
     });
   }
 
@@ -114,20 +105,12 @@ export class QuestionUpdatePage implements OnInit {
     return {
       ...new Question(),
       id: this.form.get(['id']).value,
+      title: this.form.get(['title']).value,
       text: this.form.get(['text']).value,
       correctAnswer: this.form.get(['correctAnswer']).value,
       correctAnswerFeedback: this.form.get(['correctAnswerFeedback']).value,
       wrongAnswerFeedback: this.form.get(['wrongAnswerFeedback']).value,
       createdDate: new Date(this.form.get(['createdDate']).value),
-      scenario: this.form.get(['scenario']).value,
     };
-  }
-
-  compareScenario(first: Scenario, second: Scenario): boolean {
-    return first && first.id && second && second.id ? first.id === second.id : first === second;
-  }
-
-  trackScenarioById(index: number, item: Scenario) {
-    return item.id;
   }
 }

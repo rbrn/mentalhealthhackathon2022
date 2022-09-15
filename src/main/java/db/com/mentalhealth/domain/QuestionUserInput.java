@@ -29,7 +29,7 @@ public class QuestionUserInput implements Serializable {
     private String response;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "category", "subcategory", "session" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "category", "subcategory", "question", "sessionStatuses", "session" }, allowSetters = true)
     private Scenario scenario;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -33,6 +33,8 @@
       "createdDate": "Created Date",
       "category": "Category",
       "subcategory": "Subcategory",
+      "question": "Question",
+      "sessionStatuses": "Session Statuses",
       "session": "Session"
     }
   }

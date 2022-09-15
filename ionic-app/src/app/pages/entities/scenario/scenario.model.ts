@@ -1,6 +1,8 @@
 import { BaseEntity } from 'src/model/base-entity';
 import { Category } from '../category/category.model';
 import { SubCategory } from '../sub-category/sub-category.model';
+import { Question } from '../question/question.model';
+import { ScenarioStatusEvent } from '../scenario-status-event/scenario-status-event.model';
 import { Session } from '../session/session.model';
 
 export const enum RntType {
@@ -36,6 +38,8 @@ export class Scenario implements BaseEntity {
     public createdDate?: any,
     public category?: Category,
     public subcategory?: SubCategory,
+    public question?: Question,
+    public sessionStatuses?: ScenarioStatusEvent[],
     public session?: Session
   ) {
     this.repeatable = false;

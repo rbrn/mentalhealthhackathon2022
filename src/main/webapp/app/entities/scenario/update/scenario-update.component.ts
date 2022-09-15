@@ -14,6 +14,8 @@ import { ICategory } from 'app/entities/category/category.model';
 import { CategoryService } from 'app/entities/category/service/category.service';
 import { ISubCategory } from 'app/entities/sub-category/sub-category.model';
 import { SubCategoryService } from 'app/entities/sub-category/service/sub-category.service';
+import { IQuestion } from 'app/entities/question/question.model';
+import { QuestionService } from 'app/entities/question/service/question.service';
 import { ISession } from 'app/entities/session/session.model';
 import { SessionService } from 'app/entities/session/service/session.service';
 import { RntType } from 'app/entities/enumerations/rnt-type.model';
@@ -32,6 +34,7 @@ export class ScenarioUpdateComponent implements OnInit {
 
   categoriesCollection: ICategory[] = [];
   subcategoriesCollection: ISubCategory[] = [];
+  questionsCollection: IQuestion[] = [];
   sessionsSharedCollection: ISession[] = [];
 
   editForm = this.fb.group({
@@ -51,6 +54,7 @@ export class ScenarioUpdateComponent implements OnInit {
     createdDate: [],
     category: [],
     subcategory: [],
+    question: [],
     session: [],
   });
 
@@ -58,6 +62,7 @@ export class ScenarioUpdateComponent implements OnInit {
     protected scenarioService: ScenarioService,
     protected categoryService: CategoryService,
     protected subCategoryService: SubCategoryService,
+    protected questionService: QuestionService,
     protected sessionService: SessionService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
@@ -95,6 +100,10 @@ export class ScenarioUpdateComponent implements OnInit {
   }
 
   trackSubCategoryById(_index: number, item: ISubCategory): number {
+    return item.id!;
+  }
+
+  trackQuestionById(_index: number, item: IQuestion): number {
     return item.id!;
   }
 
@@ -139,6 +148,7 @@ export class ScenarioUpdateComponent implements OnInit {
       createdDate: scenario.createdDate ? scenario.createdDate.format(DATE_TIME_FORMAT) : null,
       category: scenario.category,
       subcategory: scenario.subcategory,
+      question: scenario.question,
       session: scenario.session,
     });
 
@@ -147,6 +157,7 @@ export class ScenarioUpdateComponent implements OnInit {
       this.subcategoriesCollection,
       scenario.subcategory
     );
+    this.questionsCollection = this.questionService.addQuestionToCollectionIfMissing(this.questionsCollection, scenario.question);
     this.sessionsSharedCollection = this.sessionService.addSessionToCollectionIfMissing(this.sessionsSharedCollection, scenario.session);
   }
 
@@ -170,6 +181,16 @@ export class ScenarioUpdateComponent implements OnInit {
         )
       )
       .subscribe((subCategories: ISubCategory[]) => (this.subcategoriesCollection = subCategories));
+
+    this.questionService
+      .query({ filter: 'scenario-is-null' })
+      .pipe(map((res: HttpResponse<IQuestion[]>) => res.body ?? []))
+      .pipe(
+        map((questions: IQuestion[]) =>
+          this.questionService.addQuestionToCollectionIfMissing(questions, this.editForm.get('question')!.value)
+        )
+      )
+      .subscribe((questions: IQuestion[]) => (this.questionsCollection = questions));
 
     this.sessionService
       .query()
@@ -201,6 +222,7 @@ export class ScenarioUpdateComponent implements OnInit {
         : undefined,
       category: this.editForm.get(['category'])!.value,
       subcategory: this.editForm.get(['subcategory'])!.value,
+      question: this.editForm.get(['question'])!.value,
       session: this.editForm.get(['session'])!.value,
     };
   }

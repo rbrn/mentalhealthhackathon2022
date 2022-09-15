@@ -87,6 +87,9 @@ describe('Question entity', () => {
       cy.get('ion-item').last().click();
 
       questionDetailPage.getPageTitle().contains(SUBCOMPONENT_TITLE).should('be.visible');
+      if (question.title !== undefined && question.title !== null) {
+        questionDetailPage.getTitleContent().contains(question.title);
+      }
       if (question.text !== undefined && question.text !== null) {
         questionDetailPage.getTextContent().contains(question.text);
       }
@@ -150,6 +153,9 @@ describe('Question entity', () => {
       cy.visit(questionPageUrl + '/new');
 
       questionUpdatePage.getPageTitle().should('have.text', SUBCOMPONENT_TITLE);
+      if (questionSample.title !== undefined && questionSample.title !== null) {
+        questionUpdatePage.setTitleInput(questionSample.title);
+      }
       if (questionSample.text !== undefined && questionSample.text !== null) {
         questionUpdatePage.setTextInput(questionSample.text);
       }

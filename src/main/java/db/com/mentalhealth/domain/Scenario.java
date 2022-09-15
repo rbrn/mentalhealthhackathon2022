@@ -1,10 +1,13 @@
 package db.com.mentalhealth.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import db.com.mentalhealth.domain.enumeration.RntType;
 import db.com.mentalhealth.domain.enumeration.Theme;
 import db.com.mentalhealth.domain.enumeration.TrialType;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -80,6 +83,15 @@ public class Scenario implements Serializable {
     @OneToOne
     @JoinColumn(unique = true)
     private SubCategory subcategory;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Question question;
+
+    @OneToMany(mappedBy = "scenario")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "scenario" }, allowSetters = true)
+    private Set<ScenarioStatusEvent> sessionStatuses = new HashSet<>();
 
     @ManyToOne
     private Session session;
@@ -291,6 +303,50 @@ public class Scenario implements Serializable {
 
     public Scenario subcategory(SubCategory subCategory) {
         this.setSubcategory(subCategory);
+        return this;
+    }
+
+    public Question getQuestion() {
+        return this.question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public Scenario question(Question question) {
+        this.setQuestion(question);
+        return this;
+    }
+
+    public Set<ScenarioStatusEvent> getSessionStatuses() {
+        return this.sessionStatuses;
+    }
+
+    public void setSessionStatuses(Set<ScenarioStatusEvent> scenarioStatusEvents) {
+        if (this.sessionStatuses != null) {
+            this.sessionStatuses.forEach(i -> i.setScenario(null));
+        }
+        if (scenarioStatusEvents != null) {
+            scenarioStatusEvents.forEach(i -> i.setScenario(this));
+        }
+        this.sessionStatuses = scenarioStatusEvents;
+    }
+
+    public Scenario sessionStatuses(Set<ScenarioStatusEvent> scenarioStatusEvents) {
+        this.setSessionStatuses(scenarioStatusEvents);
+        return this;
+    }
+
+    public Scenario addSessionStatuses(ScenarioStatusEvent scenarioStatusEvent) {
+        this.sessionStatuses.add(scenarioStatusEvent);
+        scenarioStatusEvent.setScenario(this);
+        return this;
+    }
+
+    public Scenario removeSessionStatuses(ScenarioStatusEvent scenarioStatusEvent) {
+        this.sessionStatuses.remove(scenarioStatusEvent);
+        scenarioStatusEvent.setScenario(null);
         return this;
     }
 

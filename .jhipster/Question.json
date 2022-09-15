@@ -6,6 +6,11 @@
   "entityTableName": "question",
   "fields": [
     {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "text",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
@@ -35,14 +40,6 @@
   "name": "Question",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [
-    {
-      "otherEntityField": "name",
-      "otherEntityName": "scenario",
-      "otherEntityRelationshipName": "question",
-      "relationshipName": "scenario",
-      "relationshipType": "many-to-one"
-    }
-  ],
+  "relationships": [],
   "service": "serviceImpl"
 }

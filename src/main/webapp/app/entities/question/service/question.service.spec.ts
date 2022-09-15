@@ -25,6 +25,7 @@ describe('Question Service', () => {
 
     elemDefault = {
       id: 0,
+      title: 'AAAAAAA',
       text: 'AAAAAAA',
       correctAnswer: false,
       correctAnswerFeedback: false,
@@ -76,6 +77,7 @@ describe('Question Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          title: 'BBBBBB',
           text: 'BBBBBB',
           correctAnswer: true,
           correctAnswerFeedback: true,
@@ -102,8 +104,9 @@ describe('Question Service', () => {
     it('should partial update a Question', () => {
       const patchObject = Object.assign(
         {
-          text: 'BBBBBB',
-          correctAnswerFeedback: true,
+          title: 'BBBBBB',
+          correctAnswer: true,
+          createdDate: currentDate.format(DATE_TIME_FORMAT),
         },
         new Question()
       );
@@ -128,6 +131,7 @@ describe('Question Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          title: 'BBBBBB',
           text: 'BBBBBB',
           correctAnswer: true,
           correctAnswerFeedback: true,
@@ -189,7 +193,7 @@ describe('Question Service', () => {
       });
 
       it('should add only unique Question to an array', () => {
-        const questionArray: IQuestion[] = [{ id: 123 }, { id: 456 }, { id: 79671 }];
+        const questionArray: IQuestion[] = [{ id: 123 }, { id: 456 }, { id: 96145 }];
         const questionCollection: IQuestion[] = [{ id: 123 }];
         expectedResult = service.addQuestionToCollectionIfMissing(questionCollection, ...questionArray);
         expect(expectedResult).toHaveLength(3);

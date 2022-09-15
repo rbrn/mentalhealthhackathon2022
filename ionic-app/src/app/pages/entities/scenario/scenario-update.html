@@ -105,6 +105,17 @@
         </ion-select>
       </ion-item>
       <ion-item>
+        <ion-label>Question</ion-label>
+        <ion-select id="field_question" formControlName="question" [compareWith]="compareQuestion">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option
+            [value]="questionOption.id === scenario.question?.id ? scenario.question : questionOption"
+            *ngFor="let questionOption of questions; trackBy: trackQuestionById"
+            >{{questionOption.title}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
         <ion-label>Session</ion-label>
         <ion-select id="field_session" formControlName="session" [compareWith]="compareSession">
           <ion-select-option [value]="null"></ion-select-option>

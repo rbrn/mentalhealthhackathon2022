@@ -89,6 +89,20 @@
       "relationshipType": "one-to-one"
     },
     {
+      "otherEntityField": "title",
+      "otherEntityName": "question",
+      "otherEntityRelationshipName": "scenario",
+      "ownerSide": true,
+      "relationshipName": "question",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "scenarioStatusEvent",
+      "otherEntityRelationshipName": "scenario",
+      "relationshipName": "sessionStatuses",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityField": "name",
       "otherEntityName": "session",
       "otherEntityRelationshipName": "scenario",

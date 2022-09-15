@@ -12,6 +12,8 @@ import { ICategory } from 'app/entities/category/category.model';
 import { CategoryService } from 'app/entities/category/service/category.service';
 import { ISubCategory } from 'app/entities/sub-category/sub-category.model';
 import { SubCategoryService } from 'app/entities/sub-category/service/sub-category.service';
+import { IQuestion } from 'app/entities/question/question.model';
+import { QuestionService } from 'app/entities/question/service/question.service';
 import { ISession } from 'app/entities/session/session.model';
 import { SessionService } from 'app/entities/session/service/session.service';
 
@@ -24,6 +26,7 @@ describe('Scenario Management Update Component', () => {
   let scenarioService: ScenarioService;
   let categoryService: CategoryService;
   let subCategoryService: SubCategoryService;
+  let questionService: QuestionService;
   let sessionService: SessionService;
 
   beforeEach(() => {
@@ -48,6 +51,7 @@ describe('Scenario Management Update Component', () => {
     scenarioService = TestBed.inject(ScenarioService);
     categoryService = TestBed.inject(CategoryService);
     subCategoryService = TestBed.inject(SubCategoryService);
+    questionService = TestBed.inject(QuestionService);
     sessionService = TestBed.inject(SessionService);
 
     comp = fixture.componentInstance;
@@ -90,6 +94,24 @@ describe('Scenario Management Update Component', () => {
       expect(comp.subcategoriesCollection).toEqual(expectedCollection);
     });
 
+    it('Should call question query and add missing value', () => {
+      const scenario: IScenario = { id: 456 };
+      const question: IQuestion = { id: 25268 };
+      scenario.question = question;
+
+      const questionCollection: IQuestion[] = [{ id: 93848 }];
+      jest.spyOn(questionService, 'query').mockReturnValue(of(new HttpResponse({ body: questionCollection })));
+      const expectedCollection: IQuestion[] = [question, ...questionCollection];
+      jest.spyOn(questionService, 'addQuestionToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ scenario });
+      comp.ngOnInit();
+
+      expect(questionService.query).toHaveBeenCalled();
+      expect(questionService.addQuestionToCollectionIfMissing).toHaveBeenCalledWith(questionCollection, question);
+      expect(comp.questionsCollection).toEqual(expectedCollection);
+    });
+
     it('Should call Session query and add missing value', () => {
       const scenario: IScenario = { id: 456 };
       const session: ISession = { id: 9311 };
@@ -115,6 +137,8 @@ describe('Scenario Management Update Component', () => {
       scenario.category = category;
       const subcategory: ISubCategory = { id: 64807 };
       scenario.subcategory = subcategory;
+      const question: IQuestion = { id: 62267 };
+      scenario.question = question;
       const session: ISession = { id: 59966 };
       scenario.session = session;
 
@@ -124,6 +148,7 @@ describe('Scenario Management Update Component', () => {
       expect(comp.editForm.value).toEqual(expect.objectContaining(scenario));
       expect(comp.categoriesCollection).toContain(category);
       expect(comp.subcategoriesCollection).toContain(subcategory);
+      expect(comp.questionsCollection).toContain(question);
       expect(comp.sessionsSharedCollection).toContain(session);
     });
   });
@@ -205,6 +230,14 @@ describe('Scenario Management Update Component', () => {
       it('Should return tracked SubCategory primary key', () => {
         const entity = { id: 123 };
         const trackResult = comp.trackSubCategoryById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
+    describe('trackQuestionById', () => {
+      it('Should return tracked Question primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackQuestionById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

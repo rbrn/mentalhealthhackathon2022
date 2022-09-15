@@ -16,6 +16,12 @@
       </div>
     </ion-item>
     <ion-item>
+      <ion-label position="fixed">Title</ion-label>
+      <div item-content>
+        <span id="title-content">{{question.title}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
       <ion-label position="fixed">Text</ion-label>
       <div item-content>
         <span id="text-content">{{question.text}}</span>
@@ -43,12 +49,6 @@
       <ion-label position="fixed">Created Date</ion-label>
       <div item-content>
         <span id="createdDate-content">{{question.createdDate | date:'medium'}}</span>
-      </div>
-    </ion-item>
-    <ion-item>
-      <ion-label>Scenario</ion-label>
-      <div item-content *ngIf="question.scenario">
-        <a>{{question.scenario?.name}}</a>
       </div>
     </ion-item>
   </ion-list>

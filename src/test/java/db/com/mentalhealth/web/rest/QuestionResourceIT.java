@@ -3,32 +3,24 @@ package db.com.mentalhealth.web.rest;
 import static db.com.mentalhealth.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import db.com.mentalhealth.IntegrationTest;
 import db.com.mentalhealth.domain.Question;
 import db.com.mentalhealth.repository.QuestionRepository;
-import db.com.mentalhealth.service.QuestionService;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -38,10 +30,12 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link QuestionResource} REST controller.
  */
 @IntegrationTest
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class QuestionResourceIT {
+
+    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
     private static final String DEFAULT_TEXT = "AAAAAAAAAA";
     private static final String UPDATED_TEXT = "BBBBBBBBBB";
@@ -67,12 +61,6 @@ class QuestionResourceIT {
     @Autowired
     private QuestionRepository questionRepository;
 
-    @Mock
-    private QuestionRepository questionRepositoryMock;
-
-    @Mock
-    private QuestionService questionServiceMock;
-
     @Autowired
     private EntityManager em;
 
@@ -89,6 +77,7 @@ class QuestionResourceIT {
      */
     public static Question createEntity(EntityManager em) {
         Question question = new Question()
+            .title(DEFAULT_TITLE)
             .text(DEFAULT_TEXT)
             .correctAnswer(DEFAULT_CORRECT_ANSWER)
             .correctAnswerFeedback(DEFAULT_CORRECT_ANSWER_FEEDBACK)
@@ -105,6 +94,7 @@ class QuestionResourceIT {
      */
     public static Question createUpdatedEntity(EntityManager em) {
         Question question = new Question()
+            .title(UPDATED_TITLE)
             .text(UPDATED_TEXT)
             .correctAnswer(UPDATED_CORRECT_ANSWER)
             .correctAnswerFeedback(UPDATED_CORRECT_ANSWER_FEEDBACK)
@@ -131,6 +121,7 @@ class QuestionResourceIT {
         List<Question> questionList = questionRepository.findAll();
         assertThat(questionList).hasSize(databaseSizeBeforeCreate + 1);
         Question testQuestion = questionList.get(questionList.size() - 1);
+        assertThat(testQuestion.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testQuestion.getText()).isEqualTo(DEFAULT_TEXT);
         assertThat(testQuestion.getCorrectAnswer()).isEqualTo(DEFAULT_CORRECT_ANSWER);
         assertThat(testQuestion.getCorrectAnswerFeedback()).isEqualTo(DEFAULT_CORRECT_ANSWER_FEEDBACK);
@@ -154,6 +145,23 @@ class QuestionResourceIT {
         // Validate the Question in the database
         List<Question> questionList = questionRepository.findAll();
         assertThat(questionList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void checkTitleIsRequired() throws Exception {
+        int databaseSizeBeforeTest = questionRepository.findAll().size();
+        // set the field null
+        question.setTitle(null);
+
+        // Create the Question, which fails.
+
+        restQuestionMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(question)))
+            .andExpect(status().isBadRequest());
+
+        List<Question> questionList = questionRepository.findAll();
+        assertThat(questionList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -236,29 +244,12 @@ class QuestionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(question.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].text").value(hasItem(DEFAULT_TEXT)))
             .andExpect(jsonPath("$.[*].correctAnswer").value(hasItem(DEFAULT_CORRECT_ANSWER.booleanValue())))
             .andExpect(jsonPath("$.[*].correctAnswerFeedback").value(hasItem(DEFAULT_CORRECT_ANSWER_FEEDBACK.booleanValue())))
             .andExpect(jsonPath("$.[*].wrongAnswerFeedback").value(hasItem(DEFAULT_WRONG_ANSWER_FEEDBACK.booleanValue())))
             .andExpect(jsonPath("$.[*].createdDate").value(hasItem(sameInstant(DEFAULT_CREATED_DATE))));
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllQuestionsWithEagerRelationshipsIsEnabled() throws Exception {
-        when(questionServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restQuestionMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(questionServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllQuestionsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(questionServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restQuestionMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(questionServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
@@ -273,6 +264,7 @@ class QuestionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(question.getId().intValue()))
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.text").value(DEFAULT_TEXT))
             .andExpect(jsonPath("$.correctAnswer").value(DEFAULT_CORRECT_ANSWER.booleanValue()))
             .andExpect(jsonPath("$.correctAnswerFeedback").value(DEFAULT_CORRECT_ANSWER_FEEDBACK.booleanValue()))
@@ -300,6 +292,7 @@ class QuestionResourceIT {
         // Disconnect from session so that the updates on updatedQuestion are not directly saved in db
         em.detach(updatedQuestion);
         updatedQuestion
+            .title(UPDATED_TITLE)
             .text(UPDATED_TEXT)
             .correctAnswer(UPDATED_CORRECT_ANSWER)
             .correctAnswerFeedback(UPDATED_CORRECT_ANSWER_FEEDBACK)
@@ -318,6 +311,7 @@ class QuestionResourceIT {
         List<Question> questionList = questionRepository.findAll();
         assertThat(questionList).hasSize(databaseSizeBeforeUpdate);
         Question testQuestion = questionList.get(questionList.size() - 1);
+        assertThat(testQuestion.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testQuestion.getText()).isEqualTo(UPDATED_TEXT);
         assertThat(testQuestion.getCorrectAnswer()).isEqualTo(UPDATED_CORRECT_ANSWER);
         assertThat(testQuestion.getCorrectAnswerFeedback()).isEqualTo(UPDATED_CORRECT_ANSWER_FEEDBACK);
@@ -394,9 +388,10 @@ class QuestionResourceIT {
         partialUpdatedQuestion.setId(question.getId());
 
         partialUpdatedQuestion
+            .title(UPDATED_TITLE)
             .text(UPDATED_TEXT)
             .correctAnswer(UPDATED_CORRECT_ANSWER)
-            .correctAnswerFeedback(UPDATED_CORRECT_ANSWER_FEEDBACK);
+            .createdDate(UPDATED_CREATED_DATE);
 
         restQuestionMockMvc
             .perform(
@@ -410,11 +405,12 @@ class QuestionResourceIT {
         List<Question> questionList = questionRepository.findAll();
         assertThat(questionList).hasSize(databaseSizeBeforeUpdate);
         Question testQuestion = questionList.get(questionList.size() - 1);
+        assertThat(testQuestion.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testQuestion.getText()).isEqualTo(UPDATED_TEXT);
         assertThat(testQuestion.getCorrectAnswer()).isEqualTo(UPDATED_CORRECT_ANSWER);
-        assertThat(testQuestion.getCorrectAnswerFeedback()).isEqualTo(UPDATED_CORRECT_ANSWER_FEEDBACK);
+        assertThat(testQuestion.getCorrectAnswerFeedback()).isEqualTo(DEFAULT_CORRECT_ANSWER_FEEDBACK);
         assertThat(testQuestion.getWrongAnswerFeedback()).isEqualTo(DEFAULT_WRONG_ANSWER_FEEDBACK);
-        assertThat(testQuestion.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
+        assertThat(testQuestion.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
     }
 
     @Test
@@ -430,6 +426,7 @@ class QuestionResourceIT {
         partialUpdatedQuestion.setId(question.getId());
 
         partialUpdatedQuestion
+            .title(UPDATED_TITLE)
             .text(UPDATED_TEXT)
             .correctAnswer(UPDATED_CORRECT_ANSWER)
             .correctAnswerFeedback(UPDATED_CORRECT_ANSWER_FEEDBACK)
@@ -448,6 +445,7 @@ class QuestionResourceIT {
         List<Question> questionList = questionRepository.findAll();
         assertThat(questionList).hasSize(databaseSizeBeforeUpdate);
         Question testQuestion = questionList.get(questionList.size() - 1);
+        assertThat(testQuestion.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testQuestion.getText()).isEqualTo(UPDATED_TEXT);
         assertThat(testQuestion.getCorrectAnswer()).isEqualTo(UPDATED_CORRECT_ANSWER);
         assertThat(testQuestion.getCorrectAnswerFeedback()).isEqualTo(UPDATED_CORRECT_ANSWER_FEEDBACK);

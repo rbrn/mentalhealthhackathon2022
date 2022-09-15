@@ -27,18 +27,18 @@ public interface ScenarioRepository extends JpaRepository<Scenario, Long> {
     }
 
     @Query(
-        value = "select distinct scenario from Scenario scenario left join fetch scenario.category left join fetch scenario.subcategory left join fetch scenario.session",
+        value = "select distinct scenario from Scenario scenario left join fetch scenario.category left join fetch scenario.subcategory left join fetch scenario.question left join fetch scenario.session",
         countQuery = "select count(distinct scenario) from Scenario scenario"
     )
     Page<Scenario> findAllWithToOneRelationships(Pageable pageable);
 
     @Query(
-        "select distinct scenario from Scenario scenario left join fetch scenario.category left join fetch scenario.subcategory left join fetch scenario.session"
+        "select distinct scenario from Scenario scenario left join fetch scenario.category left join fetch scenario.subcategory left join fetch scenario.question left join fetch scenario.session"
     )
     List<Scenario> findAllWithToOneRelationships();
 
     @Query(
-        "select scenario from Scenario scenario left join fetch scenario.category left join fetch scenario.subcategory left join fetch scenario.session where scenario.id =:id"
+        "select scenario from Scenario scenario left join fetch scenario.category left join fetch scenario.subcategory left join fetch scenario.question left join fetch scenario.session where scenario.id =:id"
     )
     Optional<Scenario> findOneWithToOneRelationships(@Param("id") Long id);
 }

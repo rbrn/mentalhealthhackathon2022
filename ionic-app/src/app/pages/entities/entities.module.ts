@@ -40,6 +40,10 @@ const routes: Routes = [
     path: 'sub-category',
     loadChildren: () => import('./sub-category/sub-category.module').then(m => m.SubCategoryPageModule),
   },
+  {
+    path: 'scenario-status-event',
+    loadChildren: () => import('./scenario-status-event/scenario-status-event.module').then(m => m.ScenarioStatusEventPageModule),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

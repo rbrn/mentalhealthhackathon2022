@@ -37,6 +37,7 @@ entity Scenario {
 }
 
 entity Question{
+   title String required
    text String required
    correctAnswer Boolean required
    correctAnswerFeedback Boolean required
@@ -44,9 +45,13 @@ entity Question{
    createdDate ZonedDateTime
 }
 
-entity QuestionUserInput{
+entity ScenarioStatusEvent {
     userId String
-    response String
+    eventType ScenarioStatus
+}
+
+enum ScenarioStatus {
+  START("Start"), END("End")
 }
 
 entity Category{
@@ -57,57 +62,29 @@ entity SubCategory{
 name String
 }
 
-
 relationship ManyToOne {
   Scenario{session(name)} to Session
-  Question{scenario(name)} to Scenario
-  QuestionUserInput{scenario(name)} to Scenario
 }
 
 relationship OneToOne{
  Scenario{category(name)} to Category
  Scenario{subcategory(name)} to SubCategory
+ Scenario{question(title)} to Question
+}
+
+relationship OneToMany{
+ Scenario{sessionStatuses} to ScenarioStatusEvent
 }
 
 // Set pagination options
 paginate Session, Category, SubCategory with infinite-scroll
-paginate Scenario, Question, QuestionUserInput with pagination
+paginate Scenario, Question, ScenarioStatusEvent with pagination
 
 // Use Data Transfer Objects (DTO)
 // dto * with mapstruct
 
 // Set service options to all except few
 service * with serviceImpl
-
-enum CategoryEnum {
-  AIMLESS_FUTURE("Aimless future"),
-  BAD_THINGS("Bad things happening"),
-  CHILDBIRTH("Childbirth"),
-  FINANCE("Finance"),
-  FRIEND_AND_FAMILY("Friends, family, Society"),
-  GENERAL("General"),
-  MEDICAL_CONSULTATION("Medical Consultation"),
-  PERFORMANCE("Performance"),
-  PREGNANCY_SYMPTOMS("Pregnancy symptoms"),
-  PREGNANCY_FOR_BABY("Pregnancy for baby"),
-  SOCIAL("Social")
-}
-
-enum SubcategoryEnum {
-  ANXIETY("Anxiety"),
-  ATTENDING_APPOINTMENTS("Attending appointments"),
-  BIRTHING_DECISIONS("Birthing decisions"),
-  BUYING_THINGS("Buying things & organizations"),
-  DECISION_MAKING("Decision making"),
-  EXPECTATIONS_REACTIONS("Expectations, reactions and judgement from others"),
-  INTUITION_BABY_SAFE("Intuition and keeping the baby safe"),
-  JUGGLING_HEALTH("Juggling health and other activities"),
-  MIDWIFE("Midwife relationship/interactions"),
-  PARTNER_INVOLVEMENT("Partner involvement & support"),
-  SCANS("Scans"),
-  SYMPTOMS_INTERPRETATION("Symptom interpretation"),
-  TRANSITIONING_MATERNITY("Transitioning into maternity life")
-}
 
 enum RntType {
  WORRY("Worry"), RUMINATION("Rumination")

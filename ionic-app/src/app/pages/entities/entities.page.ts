@@ -14,6 +14,7 @@ export class EntitiesPage {
     { name: 'Question User Input', component: 'QuestionUserInputPage', route: 'question-user-input' },
     { name: 'Category', component: 'CategoryPage', route: 'category' },
     { name: 'Sub Category', component: 'SubCategoryPage', route: 'sub-category' },
+    { name: 'Scenario Status Event', component: 'ScenarioStatusEventPage', route: 'scenario-status-event' },
     /* jhipster-needle-add-entity-page - JHipster will add entity pages here */
   ];
 

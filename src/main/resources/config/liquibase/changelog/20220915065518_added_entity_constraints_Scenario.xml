@@ -20,6 +20,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="sub_category"/>
 
+        <addForeignKeyConstraint baseColumnNames="question_id"
+                                 baseTableName="scenario"
+                                 constraintName="fk_scenario__question_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="question"/>
+
         <addForeignKeyConstraint baseColumnNames="session_id"
                                  baseTableName="scenario"
                                  constraintName="fk_scenario__session_id"

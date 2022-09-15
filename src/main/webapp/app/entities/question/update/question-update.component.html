@@ -14,6 +14,16 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="metalHealthApp.question.title" for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+          <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('title')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="metalHealthApp.question.text" for="field_text">Text</label>
           <input type="text" class="form-control" name="text" id="field_text" data-cy="text" formControlName="text" />
           <div *ngIf="editForm.get('text')!.invalid && (editForm.get('text')!.dirty || editForm.get('text')!.touched)">
@@ -117,19 +127,6 @@
               placeholder="YYYY-MM-DD HH:mm"
             />
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="metalHealthApp.question.scenario" for="field_scenario">Scenario</label>
-          <select class="form-control" id="field_scenario" data-cy="scenario" name="scenario" formControlName="scenario">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="scenarioOption.id === editForm.get('scenario')!.value?.id ? editForm.get('scenario')!.value : scenarioOption"
-              *ngFor="let scenarioOption of scenariosSharedCollection; trackBy: trackScenarioById"
-            >
-              {{ scenarioOption.name }}
-            </option>
-          </select>
         </div>
       </div>
 

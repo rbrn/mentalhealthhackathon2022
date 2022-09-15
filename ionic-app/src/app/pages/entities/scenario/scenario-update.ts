@@ -8,6 +8,7 @@ import { Scenario } from './scenario.model';
 import { ScenarioService } from './scenario.service';
 import { Category, CategoryService } from '../category';
 import { SubCategory, SubCategoryService } from '../sub-category';
+import { Question, QuestionService } from '../question';
 import { Session, SessionService } from '../session';
 
 @Component({
@@ -18,6 +19,7 @@ export class ScenarioUpdatePage implements OnInit {
   scenario: Scenario;
   categories: Category[];
   subCategories: SubCategory[];
+  questions: Question[];
   sessions: Session[];
   createdDate: string;
   isSaving = false;
@@ -41,6 +43,7 @@ export class ScenarioUpdatePage implements OnInit {
     createdDate: [null, []],
     category: [null, []],
     subcategory: [null, []],
+    question: [null, []],
     session: [null, []],
   });
 
@@ -52,6 +55,7 @@ export class ScenarioUpdatePage implements OnInit {
     protected toastCtrl: ToastController,
     private categoryService: CategoryService,
     private subCategoryService: SubCategoryService,
+    private questionService: QuestionService,
     private sessionService: SessionService,
     private scenarioService: ScenarioService
   ) {
@@ -92,6 +96,21 @@ export class ScenarioUpdatePage implements OnInit {
       },
       error => this.onError(error)
     );
+    this.questionService.query({ filter: 'scenario-is-null' }).subscribe(
+      data => {
+        if (!this.scenario.question || !this.scenario.question.id) {
+          this.questions = data.body;
+        } else {
+          this.questionService.find(this.scenario.question.id).subscribe(
+            (subData: HttpResponse<Question>) => {
+              this.questions = [subData.body].concat(subData.body);
+            },
+            error => this.onError(error)
+          );
+        }
+      },
+      error => this.onError(error)
+    );
     this.sessionService.query().subscribe(
       data => {
         this.sessions = data.body;
@@ -123,6 +142,7 @@ export class ScenarioUpdatePage implements OnInit {
       createdDate: this.isNew ? new Date().toISOString() : scenario.createdDate,
       category: scenario.category,
       subcategory: scenario.subcategory,
+      question: scenario.question,
       session: scenario.session,
     });
   }
@@ -185,6 +205,7 @@ export class ScenarioUpdatePage implements OnInit {
       createdDate: new Date(this.form.get(['createdDate']).value),
       category: this.form.get(['category']).value,
       subcategory: this.form.get(['subcategory']).value,
+      question: this.form.get(['question']).value,
       session: this.form.get(['session']).value,
     };
   }
@@ -201,6 +222,13 @@ export class ScenarioUpdatePage implements OnInit {
   }
 
   trackSubCategoryById(index: number, item: SubCategory) {
+    return item.id;
+  }
+  compareQuestion(first: Question, second: Question): boolean {
+    return first && first.id && second && second.id ? first.id === second.id : first === second;
+  }
+
+  trackQuestionById(index: number, item: Question) {
     return item.id;
   }
   compareSession(first: Session, second: Session): boolean {

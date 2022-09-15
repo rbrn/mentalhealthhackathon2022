@@ -1,6 +1,5 @@
 package db.com.mentalhealth.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.*;
@@ -25,6 +24,10 @@ public class Question implements Serializable {
     private Long id;
 
     @NotNull
+    @Column(name = "title", nullable = false)
+    private String title;
+
+    @NotNull
     @Column(name = "text", nullable = false)
     private String text;
 
@@ -43,10 +46,6 @@ public class Question implements Serializable {
     @Column(name = "created_date")
     private ZonedDateTime createdDate;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "category", "subcategory", "session" }, allowSetters = true)
-    private Scenario scenario;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -60,6 +59,19 @@ public class Question implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public Question title(String title) {
+        this.setTitle(title);
+        return this;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getText() {
@@ -127,19 +139,6 @@ public class Question implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Scenario getScenario() {
-        return this.scenario;
-    }
-
-    public void setScenario(Scenario scenario) {
-        this.scenario = scenario;
-    }
-
-    public Question scenario(Scenario scenario) {
-        this.setScenario(scenario);
-        return this;
-    }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -164,6 +163,7 @@ public class Question implements Serializable {
     public String toString() {
         return "Question{" +
             "id=" + getId() +
+            ", title='" + getTitle() + "'" +
             ", text='" + getText() + "'" +
             ", correctAnswer='" + getCorrectAnswer() + "'" +
             ", correctAnswerFeedback='" + getCorrectAnswerFeedback() + "'" +

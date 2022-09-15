@@ -106,6 +106,12 @@
       </div>
     </ion-item>
     <ion-item>
+      <ion-label>Question</ion-label>
+      <div item-content *ngIf="scenario.question">
+        <a>{{scenario.question?.title}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
       <ion-label>Session</ion-label>
       <div item-content *ngIf="scenario.session">
         <a>{{scenario.session?.name}}</a>

@@ -45,6 +45,9 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository
             .findById(question.getId())
             .map(existingQuestion -> {
+                if (question.getTitle() != null) {
+                    existingQuestion.setTitle(question.getTitle());
+                }
                 if (question.getText() != null) {
                     existingQuestion.setText(question.getText());
                 }
@@ -73,15 +76,11 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findAll(pageable);
     }
 
-    public Page<Question> findAllWithEagerRelationships(Pageable pageable) {
-        return questionRepository.findAllWithEagerRelationships(pageable);
-    }
-
     @Override
     @Transactional(readOnly = true)
     public Optional<Question> findOne(Long id) {
         log.debug("Request to get Question : {}", id);
-        return questionRepository.findOneWithEagerRelationships(id);
+        return questionRepository.findById(id);
     }
 
     @Override

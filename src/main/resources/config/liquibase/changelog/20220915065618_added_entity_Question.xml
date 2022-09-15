@@ -14,6 +14,9 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
             <column name="text" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
@@ -27,9 +30,6 @@
                 <constraints nullable="false" />
             </column>
             <column name="created_date" type="${datetimeType}">
-                <constraints nullable="true" />
-            </column>
-            <column name="scenario_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -54,6 +54,7 @@
                   tableName="question"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
+            <column name="title" type="string"/>
             <column name="text" type="string"/>
             <column name="correct_answer" type="boolean"/>
             <column name="correct_answer_feedback" type="boolean"/>

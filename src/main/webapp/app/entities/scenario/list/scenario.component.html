@@ -78,6 +78,9 @@
           <th scope="col" jhiSortBy="subcategory.name">
             <span jhiTranslate="metalHealthApp.scenario.subcategory">Subcategory</span> <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="question.title">
+            <span jhiTranslate="metalHealthApp.scenario.question">Question</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col" jhiSortBy="session.name">
             <span jhiTranslate="metalHealthApp.scenario.session">Session</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -110,6 +113,11 @@
           <td>
             <div *ngIf="scenario.subcategory">
               <a [routerLink]="['/sub-category', scenario.subcategory?.id, 'view']">{{ scenario.subcategory?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="scenario.question">
+              <a [routerLink]="['/question', scenario.question?.id, 'view']">{{ scenario.question?.title }}</a>
             </div>
           </td>
           <td>

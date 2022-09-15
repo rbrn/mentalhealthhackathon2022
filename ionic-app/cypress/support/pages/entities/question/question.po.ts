@@ -7,6 +7,10 @@ export class QuestionComponentsPage extends EntityComponentsPage {
 export class QuestionUpdatePage extends EntityUpdatePage {
   pageSelector = 'page-question-update';
 
+  setTitleInput(title: string) {
+    this.setInputValue('title', title);
+  }
+
   setTextInput(text: string) {
     this.setInputValue('text', text);
   }
@@ -30,6 +34,10 @@ export class QuestionUpdatePage extends EntityUpdatePage {
 
 export class QuestionDetailPage extends EntityDetailPage {
   pageSelector = 'page-question-detail';
+
+  getTitleContent() {
+    return cy.get('#title-content');
+  }
 
   getTextContent() {
     return cy.get('#text-content');

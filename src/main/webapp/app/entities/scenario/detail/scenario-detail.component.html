@@ -78,6 +78,12 @@
             <a [routerLink]="['/sub-category', scenario.subcategory?.id, 'view']">{{ scenario.subcategory?.name }}</a>
           </div>
         </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.question">Question</span></dt>
+        <dd>
+          <div *ngIf="scenario.question">
+            <a [routerLink]="['/question', scenario.question?.id, 'view']">{{ scenario.question?.title }}</a>
+          </div>
+        </dd>
         <dt><span jhiTranslate="metalHealthApp.scenario.session">Session</span></dt>
         <dd>
           <div *ngIf="scenario.session">

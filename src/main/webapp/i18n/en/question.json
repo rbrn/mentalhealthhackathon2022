@@ -18,12 +18,12 @@
         "title": "Question"
       },
       "id": "ID",
+      "title": "Title",
       "text": "Text",
       "correctAnswer": "Correct Answer",
       "correctAnswerFeedback": "Correct Answer Feedback",
       "wrongAnswerFeedback": "Wrong Answer Feedback",
-      "createdDate": "Created Date",
-      "scenario": "Scenario"
+      "createdDate": "Created Date"
     }
   }
 }

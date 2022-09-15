@@ -13,6 +13,7 @@
         "questionUserInput": "Question User Input",
         "category": "Category",
         "subCategory": "Sub Category",
+        "scenarioStatusEvent": "Scenario Status Event",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
