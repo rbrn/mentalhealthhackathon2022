@@ -1,7 +1,0 @@
-{
-  "name": "jhipster",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}

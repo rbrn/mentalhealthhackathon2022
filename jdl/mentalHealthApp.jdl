@@ -1,6 +1,13 @@
 application {
   config {
-    prodDatabaseType postgresql,
+    packageName db.com.mentalhealth
+    applicationType monolith
+    clientFramework angularX
+    prodDatabaseType postgresql
+    baseName metalHealthApp
+    authenticationType jwt
+    clientPackageManager npm
+    buildTool maven
   }
   entities *
 }
@@ -9,6 +16,7 @@ entity Session {
   order Integer required
   percentageResolved Integer required
   name String required
+  sessionNumber Integer required
   createdDate ZonedDateTime
 }
 
@@ -18,12 +26,10 @@ entity Scenario {
   identifier String required
   text String required
   audioFileName String required
-  rntype String
-  theme String
-  cathegory Category
-  subcat Subcategory
+  rntype RntType
+  theme Theme
   scenarioNumber String
-  trialType String
+  trialType TrialType
   repeatable Boolean
   positivity Boolean
   vividness Boolean
@@ -43,14 +49,28 @@ entity QuestionUserInput{
     response String
 }
 
+entity Category{
+ name String
+}
+
+entity SubCategory{
+name String
+}
+
+
 relationship ManyToOne {
   Scenario{session(name)} to Session
   Question{scenario(name)} to Scenario
   QuestionUserInput{scenario(name)} to Scenario
 }
 
+relationship OneToOne{
+ Scenario{category(name)} to Category
+ Scenario{subcategory(name)} to SubCategory
+}
+
 // Set pagination options
-paginate Session with infinite-scroll
+paginate Session, Category, SubCategory with infinite-scroll
 paginate Scenario, Question, QuestionUserInput with pagination
 
 // Use Data Transfer Objects (DTO)
@@ -59,13 +79,44 @@ paginate Scenario, Question, QuestionUserInput with pagination
 // Set service options to all except few
 service * with serviceImpl
 
-enum Category {
-  CAT1("Bug"),
-  CAT2("Feature")
+enum CategoryEnum {
+  AIMLESS_FUTURE("Aimless future"),
+  BAD_THINGS("Bad things happening"),
+  CHILDBIRTH("Childbirth"),
+  FINANCE("Finance"),
+  FRIEND_AND_FAMILY("Friends, family, Society"),
+  GENERAL("General"),
+  MEDICAL_CONSULTATION("Medical Consultation"),
+  PERFORMANCE("Performance"),
+  PREGNANCY_SYMPTOMS("Pregnancy symptoms"),
+  PREGNANCY_FOR_BABY("Pregnancy for baby"),
+  SOCIAL("Social")
 }
 
-enum Subcategory {
-  SUBC1("Bug"),
-  SUBC2("Feature")
+enum SubcategoryEnum {
+  ANXIETY("Anxiety"),
+  ATTENDING_APPOINTMENTS("Attending appointments"),
+  BIRTHING_DECISIONS("Birthing decisions"),
+  BUYING_THINGS("Buying things & organizations"),
+  DECISION_MAKING("Decision making"),
+  EXPECTATIONS_REACTIONS("Expectations, reactions and judgement from others"),
+  INTUITION_BABY_SAFE("Intuition and keeping the baby safe"),
+  JUGGLING_HEALTH("Juggling health and other activities"),
+  MIDWIFE("Midwife relationship/interactions"),
+  PARTNER_INVOLVEMENT("Partner involvement & support"),
+  SCANS("Scans"),
+  SYMPTOMS_INTERPRETATION("Symptom interpretation"),
+  TRANSITIONING_MATERNITY("Transitioning into maternity life")
 }
 
+enum RntType {
+ WORRY("Worry"), RUMINATION("Rumination")
+}
+
+enum Theme {
+  DOMESTIC("Domestic"), NON_DOMESTIC("Non-domestic")
+}
+
+enum TrialType{
+ P_ENUM("P"), SG_ENUM("SG")
+}
