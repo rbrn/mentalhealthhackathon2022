@@ -1,0 +1,9 @@
+{
+  "metalHealthApp": {
+    "ScenarioStatus": {
+      "null": "",
+      "START": "Start",
+      "END": "End"
+    }
+  }
+}

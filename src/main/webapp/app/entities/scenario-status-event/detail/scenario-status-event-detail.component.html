@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="scenarioStatusEvent">
+      <h2 data-cy="scenarioStatusEventDetailsHeading">
+        <span jhiTranslate="metalHealthApp.scenarioStatusEvent.detail.title">Scenario Status Event</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ scenarioStatusEvent.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenarioStatusEvent.userId">User Id</span></dt>
+        <dd>
+          <span>{{ scenarioStatusEvent.userId }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenarioStatusEvent.eventType">Event Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'metalHealthApp.ScenarioStatus.' + scenarioStatusEvent.eventType }}">{{
+            scenarioStatusEvent.eventType
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenarioStatusEvent.scenario">Scenario</span></dt>
+        <dd>
+          <div *ngIf="scenarioStatusEvent.scenario">
+            <a [routerLink]="['/scenario', scenarioStatusEvent.scenario?.id, 'view']">{{ scenarioStatusEvent.scenario?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/scenario-status-event', scenarioStatusEvent.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

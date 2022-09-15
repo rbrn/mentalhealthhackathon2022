@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Scenario Status Event</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">ID</ion-label>
+      <div item-content>
+        <span id="id-content">{{scenarioStatusEvent.id}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">User Id</ion-label>
+      <div item-content>
+        <span id="userId-content">{{scenarioStatusEvent.userId}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Event Type</ion-label>
+      <div item-content>
+        <span id="eventType-content">{{scenarioStatusEvent.eventType}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Scenario</ion-label>
+      <div item-content *ngIf="scenarioStatusEvent.scenario">
+        <a>{{scenarioStatusEvent.scenario?.id}}</a>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(scenarioStatusEvent)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(scenarioStatusEvent)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>

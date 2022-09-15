@@ -1,0 +1,32 @@
+{
+  "applications": ["metalHealthApp"],
+  "changelogDate": "20220915134008",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "scenario_status_event",
+  "fields": [
+    {
+      "fieldName": "userId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "eventType",
+      "fieldType": "ScenarioStatus",
+      "fieldValues": "START (Start),END (End)"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ScenarioStatusEvent",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "scenario",
+      "otherEntityRelationshipName": "sessionStatuses",
+      "relationshipName": "scenario",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}
