@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Scenario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">ID</ion-label>
+      <div item-content>
+        <span id="id-content">{{scenario.id}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Order</ion-label>
+      <div item-content>
+        <span id="order-content">{{scenario.order}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Name</ion-label>
+      <div item-content>
+        <span id="name-content">{{scenario.name}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Identifier</ion-label>
+      <div item-content>
+        <span id="identifier-content">{{scenario.identifier}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Text</ion-label>
+      <div item-content>
+        <span id="text-content">{{scenario.text}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Audio File Name</ion-label>
+      <div item-content>
+        <span id="audioFileName-content">{{scenario.audioFileName}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Rntype</ion-label>
+      <div item-content>
+        <span id="rntype-content">{{scenario.rntype}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Theme</ion-label>
+      <div item-content>
+        <span id="theme-content">{{scenario.theme}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Scenario Number</ion-label>
+      <div item-content>
+        <span id="scenarioNumber-content">{{scenario.scenarioNumber}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Trial Type</ion-label>
+      <div item-content>
+        <span id="trialType-content">{{scenario.trialType}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Repeatable</ion-label>
+      <div item-content>
+        <span id="repeatable-content">{{scenario.repeatable}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Positivity</ion-label>
+      <div item-content>
+        <span id="positivity-content">{{scenario.positivity}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Vividness</ion-label>
+      <div item-content>
+        <span id="vividness-content">{{scenario.vividness}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Created Date</ion-label>
+      <div item-content>
+        <span id="createdDate-content">{{scenario.createdDate | date:'medium'}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Category</ion-label>
+      <div item-content *ngIf="scenario.category">
+        <a>{{scenario.category?.name}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Subcategory</ion-label>
+      <div item-content *ngIf="scenario.subcategory">
+        <a>{{scenario.subcategory?.name}}</a>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Session</ion-label>
+      <div item-content *ngIf="scenario.session">
+        <a>{{scenario.session?.name}}</a>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(scenario)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(scenario)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>

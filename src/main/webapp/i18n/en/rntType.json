@@ -1,0 +1,9 @@
+{
+  "metalHealthApp": {
+    "RntType": {
+      "null": "",
+      "WORRY": "Worry",
+      "RUMINATION": "Rumination"
+    }
+  }
+}

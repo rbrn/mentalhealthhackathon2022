@@ -1,0 +1,170 @@
+<div>
+  <h2 id="page-heading" data-cy="ScenarioHeading">
+    <span jhiTranslate="metalHealthApp.scenario.home.title">Scenarios</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="metalHealthApp.scenario.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-scenario"
+        [routerLink]="['/scenario/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="metalHealthApp.scenario.home.createLabel"> Create a new Scenario </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="scenarios?.length === 0">
+    <span jhiTranslate="metalHealthApp.scenario.home.notFound">No scenarios found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="scenarios && scenarios.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="order">
+            <span jhiTranslate="metalHealthApp.scenario.order">Order</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <span jhiTranslate="metalHealthApp.scenario.name">Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="identifier">
+            <span jhiTranslate="metalHealthApp.scenario.identifier">Identifier</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="text">
+            <span jhiTranslate="metalHealthApp.scenario.text">Text</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="audioFileName">
+            <span jhiTranslate="metalHealthApp.scenario.audioFileName">Audio File Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="rntype">
+            <span jhiTranslate="metalHealthApp.scenario.rntype">Rntype</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="theme">
+            <span jhiTranslate="metalHealthApp.scenario.theme">Theme</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="scenarioNumber">
+            <span jhiTranslate="metalHealthApp.scenario.scenarioNumber">Scenario Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="trialType">
+            <span jhiTranslate="metalHealthApp.scenario.trialType">Trial Type</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="repeatable">
+            <span jhiTranslate="metalHealthApp.scenario.repeatable">Repeatable</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="positivity">
+            <span jhiTranslate="metalHealthApp.scenario.positivity">Positivity</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="vividness">
+            <span jhiTranslate="metalHealthApp.scenario.vividness">Vividness</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="createdDate">
+            <span jhiTranslate="metalHealthApp.scenario.createdDate">Created Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="category.name">
+            <span jhiTranslate="metalHealthApp.scenario.category">Category</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="subcategory.name">
+            <span jhiTranslate="metalHealthApp.scenario.subcategory">Subcategory</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="session.name">
+            <span jhiTranslate="metalHealthApp.scenario.session">Session</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let scenario of scenarios; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/scenario', scenario.id, 'view']">{{ scenario.id }}</a>
+          </td>
+          <td>{{ scenario.order }}</td>
+          <td>{{ scenario.name }}</td>
+          <td>{{ scenario.identifier }}</td>
+          <td>{{ scenario.text }}</td>
+          <td>{{ scenario.audioFileName }}</td>
+          <td jhiTranslate="{{ 'metalHealthApp.RntType.' + scenario.rntype }}">{{ scenario.rntype }}</td>
+          <td jhiTranslate="{{ 'metalHealthApp.Theme.' + scenario.theme }}">{{ scenario.theme }}</td>
+          <td>{{ scenario.scenarioNumber }}</td>
+          <td jhiTranslate="{{ 'metalHealthApp.TrialType.' + scenario.trialType }}">{{ scenario.trialType }}</td>
+          <td>{{ scenario.repeatable }}</td>
+          <td>{{ scenario.positivity }}</td>
+          <td>{{ scenario.vividness }}</td>
+          <td>{{ scenario.createdDate | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="scenario.category">
+              <a [routerLink]="['/category', scenario.category?.id, 'view']">{{ scenario.category?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="scenario.subcategory">
+              <a [routerLink]="['/sub-category', scenario.subcategory?.id, 'view']">{{ scenario.subcategory?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="scenario.session">
+              <a [routerLink]="['/session', scenario.session?.id, 'view']">{{ scenario.session?.name }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/scenario', scenario.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/scenario', scenario.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(scenario)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="scenarios && scenarios.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

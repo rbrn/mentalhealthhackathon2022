@@ -1,0 +1,98 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="scenario">
+      <h2 data-cy="scenarioDetailsHeading"><span jhiTranslate="metalHealthApp.scenario.detail.title">Scenario</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ scenario.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.order">Order</span></dt>
+        <dd>
+          <span>{{ scenario.order }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.name">Name</span></dt>
+        <dd>
+          <span>{{ scenario.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.identifier">Identifier</span></dt>
+        <dd>
+          <span>{{ scenario.identifier }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.text">Text</span></dt>
+        <dd>
+          <span>{{ scenario.text }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.audioFileName">Audio File Name</span></dt>
+        <dd>
+          <span>{{ scenario.audioFileName }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.rntype">Rntype</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'metalHealthApp.RntType.' + scenario.rntype }}">{{ scenario.rntype }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.theme">Theme</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'metalHealthApp.Theme.' + scenario.theme }}">{{ scenario.theme }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.scenarioNumber">Scenario Number</span></dt>
+        <dd>
+          <span>{{ scenario.scenarioNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.trialType">Trial Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'metalHealthApp.TrialType.' + scenario.trialType }}">{{ scenario.trialType }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.repeatable">Repeatable</span></dt>
+        <dd>
+          <span>{{ scenario.repeatable }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.positivity">Positivity</span></dt>
+        <dd>
+          <span>{{ scenario.positivity }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.vividness">Vividness</span></dt>
+        <dd>
+          <span>{{ scenario.vividness }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.createdDate">Created Date</span></dt>
+        <dd>
+          <span>{{ scenario.createdDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.category">Category</span></dt>
+        <dd>
+          <div *ngIf="scenario.category">
+            <a [routerLink]="['/category', scenario.category?.id, 'view']">{{ scenario.category?.name }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.subcategory">Subcategory</span></dt>
+        <dd>
+          <div *ngIf="scenario.subcategory">
+            <a [routerLink]="['/sub-category', scenario.subcategory?.id, 'view']">{{ scenario.subcategory?.name }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="metalHealthApp.scenario.session">Session</span></dt>
+        <dd>
+          <div *ngIf="scenario.session">
+            <a [routerLink]="['/session', scenario.session?.id, 'view']">{{ scenario.session?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/scenario', scenario.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

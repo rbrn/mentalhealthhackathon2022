@@ -1,0 +1,100 @@
+{
+  "applications": ["metalHealthApp"],
+  "changelogDate": "20220915065518",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "scenario",
+  "fields": [
+    {
+      "fieldName": "order",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "identifier",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "text",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "audioFileName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "rntype",
+      "fieldType": "RntType",
+      "fieldValues": "WORRY (Worry),RUMINATION (Rumination)"
+    },
+    {
+      "fieldName": "theme",
+      "fieldType": "Theme",
+      "fieldValues": "DOMESTIC (Domestic),NON_DOMESTIC (Non-domestic)"
+    },
+    {
+      "fieldName": "scenarioNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "trialType",
+      "fieldType": "TrialType",
+      "fieldValues": "P_ENUM (P),SG_ENUM (SG)"
+    },
+    {
+      "fieldName": "repeatable",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "positivity",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "vividness",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Scenario",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "category",
+      "otherEntityRelationshipName": "scenario",
+      "ownerSide": true,
+      "relationshipName": "category",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "subCategory",
+      "otherEntityRelationshipName": "scenario",
+      "ownerSide": true,
+      "relationshipName": "subcategory",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "session",
+      "otherEntityRelationshipName": "scenario",
+      "relationshipName": "session",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,9 @@
+{
+  "metalHealthApp": {
+    "TrialType": {
+      "null": "",
+      "P_ENUM": "P",
+      "SG_ENUM": "SG"
+    }
+  }
+}

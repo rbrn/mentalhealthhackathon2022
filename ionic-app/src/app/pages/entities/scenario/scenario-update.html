@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Scenario</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
+        <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+        <ion-icon name="checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item [hidden]="!form.id">
+        <ion-label>ID</ion-label>
+        <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Order</ion-label>
+        <ion-input type="text" name="order" formControlName="order"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type="text" name="name" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Identifier</ion-label>
+        <ion-input type="text" name="identifier" formControlName="identifier"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Text</ion-label>
+        <ion-input type="text" name="text" formControlName="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Audio File Name</ion-label>
+        <ion-input type="text" name="audioFileName" formControlName="audioFileName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Rntype</ion-label>
+        <ion-select formControlName="rntype" id="field_rntype">
+          <ion-select-option value="WORRY">{{'RntType.WORRY' | translate}}</ion-select-option>
+          <ion-select-option value="RUMINATION">{{'RntType.RUMINATION' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Theme</ion-label>
+        <ion-select formControlName="theme" id="field_theme">
+          <ion-select-option value="DOMESTIC">{{'Theme.DOMESTIC' | translate}}</ion-select-option>
+          <ion-select-option value="NON_DOMESTIC">{{'Theme.NON_DOMESTIC' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Scenario Number</ion-label>
+        <ion-input type="text" name="scenarioNumber" formControlName="scenarioNumber"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Trial Type</ion-label>
+        <ion-select formControlName="trialType" id="field_trialType">
+          <ion-select-option value="P_ENUM">{{'TrialType.P_ENUM' | translate}}</ion-select-option>
+          <ion-select-option value="SG_ENUM">{{'TrialType.SG_ENUM' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Repeatable</ion-label>
+        <ion-checkbox formControlName="repeatable"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Positivity</ion-label>
+        <ion-checkbox formControlName="positivity"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Vividness</ion-label>
+        <ion-checkbox formControlName="vividness"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Created Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="createdDate" id="field_createdDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Category</ion-label>
+        <ion-select id="field_category" formControlName="category" [compareWith]="compareCategory">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option
+            [value]="categoryOption.id === scenario.category?.id ? scenario.category : categoryOption"
+            *ngFor="let categoryOption of categories; trackBy: trackCategoryById"
+            >{{categoryOption.name}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Subcategory</ion-label>
+        <ion-select id="field_subcategory" formControlName="subcategory" [compareWith]="compareSubCategory">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option
+            [value]="subCategoryOption.id === scenario.subcategory?.id ? scenario.subcategory : subCategoryOption"
+            *ngFor="let subCategoryOption of subcategories; trackBy: trackSubCategoryById"
+            >{{subCategoryOption.name}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Session</ion-label>
+        <ion-select id="field_session" formControlName="session" [compareWith]="compareSession">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option [value]="sessionOption" *ngFor="let sessionOption of sessions; trackBy: trackSessionById"
+            >{{sessionOption.name}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
